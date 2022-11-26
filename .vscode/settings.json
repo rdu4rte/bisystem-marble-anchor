@@ -1,0 +1,12 @@
+{
+  "python.formatting.provider": "autopep8",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "python.formatting.autopep8Args": [
+    "--indent-size=2",
+    "--max-line-length",
+    "119",
+    "--experimental"
+  ]
+}

@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  mongodb:
+    hostname: 'mongodb-${PROJECT_NAME}'
+    container_name: 'mongodb-${PROJECT_NAME}'
+    image: 'mongo:4.2.3'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test
+    networks:
+      - local_dev_network
+networks:
+  local_dev_network:
+    driver: bridge
