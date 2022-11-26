@@ -10,6 +10,7 @@ vars:
   COMPOSE_FILE: "COMPOSE_FILE=docker-compose.yml"
   PIP_FREEZE: "pip freeze > requirements.txt"
   PIP_INSTALL: "pip install -r requirements.txt"
+  SEED_CMD: "python3 code/seed.py"
 
 tasks:
   default:
@@ -27,10 +28,16 @@ tasks:
     cmds:
       - "{{.PIP_INSTALL}}"
 
+  seed:
+    silent: false
+    cmds:
+      - "{{.SEED_CMD}}"
+
   run:
     silent: false
     cmds:
       - "{{.UP_CONTAINERS}}"
+      - task seed
       - "{{.RUN_CMD}}"
 
   stop:
