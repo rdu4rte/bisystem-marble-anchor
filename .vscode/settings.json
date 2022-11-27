@@ -8,5 +8,8 @@
     "--max-line-length",
     "119",
     "--experimental"
-  ]
+  ],
+  "[python]": {
+    "editor.showUnused": true,
+  }
 }

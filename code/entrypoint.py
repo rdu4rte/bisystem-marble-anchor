@@ -1,9 +1,29 @@
 from argparse import ArgumentParser, Namespace
+from connectors.mongodb import mongo_connection
+from modules.items import ItemsOperations
+from config.logger import main_logger
+from modules.sales import SalesOperations
+from modules.users import UsersOperations
 
 
 def bootstrap():
-  print('hello from the other world')
-  return {}
+  # logger
+  main_logger(args)
+
+  # mongodb connector
+  db_connection = mongo_connection()
+
+  # modules mapper
+  map_modules: dict = {
+      'items': ItemsOperations(db_connection=db_connection, channel=args.channel, action=args.action),
+      'users': UsersOperations(db_connection=db_connection, channel=args.channel, action=args.action),
+      'sales': SalesOperations(db_connection=db_connection, channel=args.channel, action=args.action)
+  }
+
+  if args.module == 'bootstrap':
+    return print('[Bootstrap] RUN_CMD')
+
+  return map_modules[args.module].perform()
 
 
 if __name__ == '__main__':
