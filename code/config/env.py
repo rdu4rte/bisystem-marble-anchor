@@ -9,7 +9,9 @@ mongo_host: str = os.getenv('MONGO_HOST')
 mongo_db: str = os.getenv('MONGO_DB')
 mongo_port: int = os.getenv('MONGO_PORT')
 
-mongo_uri: str = 'mongodb://{host}:{port}'.format(
+mongo_uri: str = 'mongodb://{username}:{password}@{host}:{port}'.format(
+    username=mongo_username,
+    password=mongo_password,
     host=mongo_host,
     port=mongo_port
 )
