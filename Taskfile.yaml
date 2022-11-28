@@ -11,6 +11,7 @@ vars:
   PIP_FREEZE: "pip freeze > requirements.txt"
   PIP_INSTALL: "pip install -r requirements.txt"
   SEED_CMD: "python3 code/seed.py"
+  FORMAT_CMD: "flake8 code/**"
 
 tasks:
   default:
@@ -45,8 +46,13 @@ tasks:
     cmds:
       - "{{.STOP_CMD}}"
 
-  restart: 
+  restart:
     silent: false
     cmds:
       - task stop
       - task run
+
+  format:
+    silent: false
+    cmds:
+      - "{{.FORMAT_CMD}}"
