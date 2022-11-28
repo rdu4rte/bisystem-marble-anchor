@@ -18,4 +18,18 @@ class UsersOperations:
     print('[Users] action not found')
 
   def users_analysis(self):
+    metrics: list = [
+        {'status': 'active', 'amount': 0},
+        {'status': 'inactive', 'amount': 0}
+    ]
+
     users = self.db_connection['users'].find({})
+
+    for user in users:
+      if user['active']:
+        metrics[0]['amount'] += 1
+      elif not user['active']:
+        metrics[1]['amount'] += 1
+
+    df = pd.DataFrame(metrics).sort_values(by='status', ascending=False)
+    print(df)

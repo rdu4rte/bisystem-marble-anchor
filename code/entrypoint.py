@@ -1,9 +1,9 @@
 from argparse import ArgumentParser, Namespace
-from connectors.mongodb import mongo_connection
-from modules.items import ItemsOperations
-from config.logger import main_logger
-from modules.sales import SalesOperations
 from modules.users import UsersOperations
+from modules.sales import SalesOperations
+from config.logger import main_logger
+from modules.items import ItemsOperations
+from connectors.mongodb import mongo_connection
 
 
 def bootstrap():

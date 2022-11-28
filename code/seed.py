@@ -21,7 +21,7 @@ def seed():
   user_ids: list = []
 
   # items
-  for _ in range(250):
+  for _ in range(1000):
     id = ObjectId()
     item: dict = {
         '_id': id,
@@ -38,7 +38,7 @@ def seed():
     data[0]['data'].append(item)
 
   # users
-  for _ in range(200):
+  for _ in range(800):
     id = ObjectId()
     first_name = fake.first_name()
     last_name = fake.last_name()
@@ -48,6 +48,7 @@ def seed():
         'email': '{}_{}@{}'.format(first_name.lower(), last_name.lower(), fake.free_email_domain()),
         'firstname': first_name,
         'lastname': last_name,
+        'active': fake.boolean(chance_of_getting_true=50),
         'created_at': datetime.datetime.now(),
         'updated_at': datetime.datetime.now()
     }
@@ -56,7 +57,7 @@ def seed():
     data[2]['data'].append(item)
 
   # sales
-  for _ in range(100):
+  for _ in range(555):
     id = ObjectId()
     value: float = np.random.uniform(100, 1000)
     amount: int = random.randint(1, 8)
