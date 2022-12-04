@@ -56,3 +56,8 @@ tasks:
     silent: false
     cmds:
       - "{{.FORMAT_CMD}}"
+
+  commit:
+    silent: false
+    cmds:
+      - git add . && gitmoji -c
