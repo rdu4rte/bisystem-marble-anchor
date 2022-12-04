@@ -47,7 +47,9 @@ def seed():
         item: dict = {
             "_id": id,
             "email": "{}_{}@{}".format(
-                first_name.lower(), last_name.lower(), fake.free_email_domain()
+                first_name.lower(),
+                last_name.lower(),
+                fake.free_email_domain(),
             ),
             "firstname": first_name,
             "lastname": last_name,
