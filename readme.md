@@ -30,7 +30,7 @@ task format
 
 ### Run seed and up db containers
 ~~~
-task start
+task run
 ~~~
 
 ### Stop services

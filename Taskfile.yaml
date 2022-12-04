@@ -6,7 +6,7 @@ vars:
   LOCAL_SERVICES: "mongodb"
   UP_CONTAINERS: "docker-compose up -d {{.LOCAL_SERVICES}}"
   STOP_CMD: "docker-compose down -v"
-  RUN_CMD: "python3 code/entrypoint.py -m=bootstrap"
+  RUN_CMD: "python3 code/main.py -m=bootstrap"
   COMPOSE_FILE: "COMPOSE_FILE=docker-compose.yml"
   PIP_FREEZE: "pip freeze > requirements.txt"
   PIP_INSTALL: "pip install -r requirements.txt"

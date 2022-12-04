@@ -1,63 +1,30 @@
-from pymongo import MongoClient
+from connectors.mongo_proxy import MongoProxy
 import pandas as pd
+import csv
 
 
 class ItemsOperations:
-    actions = ["items_category_analysis", "items_by_category"]
+    actions = []
+    csv_path: str
 
     def __init__(self, db_connection, channel, action):
-        self.db_connection: MongoClient = db_connection
+        self.db_connection: MongoProxy = db_connection
         self.channel = channel
         self.action = action
+        self.csv_path = f"csv_data/items_{self.action}_data.csv"
 
     def perform(self):
-        if self.action in self.actions and self.action == self.actions[0]:
-            return self.items_category_analysis()
-        if self.action in self.actions and self.action == self.actions[1]:
-            return self.items_by_category()
+        if self.action == "csv":
+            return self.generate_csv()
+
+        # return self[self.action]()
 
         print("[Items] action not found")
 
-    def items_category_analysis(self):
-        items = self.db_connection["items"].find({})
-        df = pd.DataFrame(items).sort_values(by="category", ascending=True)
-        df.to_csv(f"csv_data/{self.action}.csv")
-        return {}
+    def generate_csv(self):
+        db_conn = self.db_connection
+        results: list = db_conn["items"].find({})
 
-    def items_by_category(self):
-        items = self.db_connection["items"].find({})
-
-        results: list = []
-        items_count = len(list(items.clone()))
-        progress: int = 1
-
-        categories: list = [
-            {"category": "internal", "amount": 0},
-            {"category": "external", "amount": 0},
-            {"category": "hybrid", "amount": 0},
-        ]
-
-        for item in items:
-            print(
-                f'[{progress}/{items_count}] item: {item["name"]},',
-                f'  int: {categories[0]["amount"]}',
-                f' / ext: {categories[1]["amount"]}',
-                f' / hyb: {categories[2]["amount"]}',
-            )
-
-            if item["category"] == "internal":
-                categories[0]["amount"] += 1
-            elif item["category"] == "external":
-                categories[1]["amount"] += 1
-            elif item["category"] == "hybrid":
-                categories[2]["amount"] += 1
-
-            results.append(
-                {"name": item["name"], "category": item["category"]}
-            )
-
-            progress += 1
-
-        print(
-            pd.DataFrame(categories).sort_values(by="amount", ascending=False)
-        )
+        df: pd.DataFrame = pd.DataFrame(results)
+        df.to_csv(self.csv_path, quoting=csv.QUOTE_ALL)
+        print(f"file generated and available on path: {self.csv_path}")
