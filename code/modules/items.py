@@ -15,7 +15,6 @@ class ItemsOperations:
 
     def perform(self):
         self.generate_csv()
-        return self[self.action]()
 
     def generate_csv(self):
         db_conn = self.db_connection
