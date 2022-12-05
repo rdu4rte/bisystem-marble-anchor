@@ -17,18 +17,18 @@ def bootstrap():
     map_modules: dict = {
         "items": ItemsOperations(
             db_connection=db_connection,
-            channel=args.channel,
             action=args.action,
+            module=args.module,
         ),
         "users": UsersOperations(
             db_connection=db_connection,
-            channel=args.channel,
             action=args.action,
+            module=args.module,
         ),
         "sales": SalesOperations(
             db_connection=db_connection,
-            channel=args.channel,
             action=args.action,
+            module=args.module,
         ),
     }
 
@@ -43,7 +43,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "-m", "--module", help="items, sales, users", type=str
     )
-    parser.add_argument("-c", "--channel", help="0, 1, 2", type=int)
     parser.add_argument("-a", "--action", help="selected action", type=str)
 
     args: Namespace = parser.parse_args()
